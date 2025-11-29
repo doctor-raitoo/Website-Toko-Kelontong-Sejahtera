@@ -1,11 +1,15 @@
 *,*::before,*::after{box-sizing:border-box}body,h1,h2,h3,h4,p,figure,blockquote,dl,dd{margin:0}ul[role="list"],ol[role="list"]{list-style:none}html:focus-within{scroll-behavior:smooth}body{min-height:100vh;text-rendering:optimizeSpeed;line-height:1.5}a:not([class]){text-decoration-skip-ink:auto}img,picture{max-width:100%;display:block}input,button,textarea,select{font:inherit}@media(prefers-reduced-motion:reduce){html:focus-within{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}}
 
-@import url('https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&display=swap" rel="stylesheet');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 body#loginBody {
     background: url(image/gambar2.png) no-repeat;
     background-size: cover;
-    font-family: "Stack Sans Text";
+    font-family: "Roboto";
+}
+
+body {
+    font-family: "Roboto";
 }
 
 .loginHeader {
@@ -14,7 +18,7 @@ body#loginBody {
 }
 
 .loginHeader h1 {
-    font-size: 100px;
+    font-size: 80px;
     color: white;
     padding: 0px;
     margin: 0px;
@@ -23,9 +27,8 @@ body#loginBody {
 .loginHeader p {
     color: white;
     display: inline-block;
-    font-size: 50px;
+    font-size: 40px;
     margin: 0px;
-    text-transform: uppercase;
 }
 
 .loginHeader p::after {
@@ -82,42 +85,405 @@ body#loginBody {
     color: white;
 }
 
+#errorMessage {
+    background: white;
+    text-align: center;
+    color: red;
+    font-size: 25px;
+    padding: 10px;
+}
+
+/* Homepage */
+
 .header {
     width: 100%;
-    height: 20px;
-    background: skyblue;
+    background: blue;
+    padding: 10px 0px;
+    text-align: right;
+}
+
+.header a {
+    font-size: 20px;
+    color: white;
+    padding: 5px 1px;
+    text-decoration: none;
+    border: 2px solid transparent;
+}
+
+.header a:hover {
+    border: 2px solid white;
+    border-radius: 10px;
 }
 
 .banner {
-    background: url('image/gambar1.jpg') no-repeat center center fixed;
+    background: url('image/gambar2.png') no-repeat center center fixed;
     background-size: cover;
     padding-top: 100px;
     padding-bottom: 100px;
+    height: 80vh;
 }
 
 .homepageContainer {
     width: 100%;
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
 .bannerHeader h1 {
-    font-size: 100px;
+    font-size: 80px;
     color: white;
     line-height: 100%;
 }
 
 .bannerHeader p {
-    font-size: 30px;
+    font-size: 40px;
+    margin-top: 10px;
     color: white;
-    text-transform: uppercase;
     line-height: 100%;
 }
 
 .bannerTagline {
-    margin-top: ;
-    font-size: 30px;   
+    margin-top: 20px;
+    font-size: 20px;   
+    color: white;
 }
+
+.bannerIcon {
+    margin-top: 50px;
+}
+
+.bannerIcon a {
+    font-size: 22px;
+    margin-left: 40px;
+    padding: 8px 16px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+}
+
+.bannerIcon a:first-child {
+    margin-left: 0px;
+}
+
+.bannerIcon a:hover {
+    color: white;
+    font-size: 22px;
+    background: blue;
+    transition: .5s all;
+}
+
+.homepageFeatures {
+    display: flex;
+    flex-direction: row;
+    padding: 80px 0px;
+}
+
+.homepageFeature {
+    padding: 10px 20px;
+    text-align: center;
+    width: 33.3%;
+}
+
+.homepageFeature:hover {
+    border-top: 2px solid blue;
+    border-bottom: 2px solid blue;
+    transition: 0.5s all;
+}
+
+.homepageFeature .featureIcon {
+    height: 80px;
+    width: 80px;
+    font-size: 30px;
+    display: inline-block;
+    background: blue;
+    color: white;
+    padding-top: 15px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+.homepageFeature .featureTitle {
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+.homepageFeature .featureDesc {
+    color: black;
+}
+
+.homepageAbout {
+    background: lightgray;
+    padding: 50px 0px;
+}
+
+.about {
+    width: 40%;
+}
+
+.image {
+    width: 100%;
+    text-align: center;
+}
+
+.image img {
+    width: 90%;
+    max-width: 400px;
+    height: auto;          
+    border-radius: 10px;   
+    object-fit: cover;
+}
+
+.homepageAboutContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+}
+
+.homepageAboutContainer > div {
+    width: 50%;
+}
+
+.homepageAbout h3 {
+    margin-bottom: 20px;
+}
+
+.homepageAbout p {
+    color: darkslategrey;
+    line-height: 150%;
+    margin-bottom: 30px;
+}
+
+.footer {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+.footer a {
+    color: lightslategrey;
+    margin-left: 30px;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    font-weight: bold;
+    color: lightskyblue;
+    transition: 0.5s all;
+}
+
+/* dashboard */
+#dashboard_main_container {
+    display: flex;
+    flex-direction: row;
+}
+
+.dashboard_sidebar {
+    width: 20%;
+    background: #323232;
+    height: 100vh;
+}
+
+.dashboard_content_container {
+    width: 80%;
+    background: #f4f6f9;
+}
+
+.dashboard_logo {
+    color: blue;
+    font-size: 50px;
+    text-align: center;
+}
+
+.dashboard_sidebar_user {
+    text-align: center;
+    position: relative;
+    padding-bottom: 20px;
+    border-bottom: 1px solid white;
+}
+
+.dashboard_sidebar_user img {
+    width: 50px;
+    display: inline-block;
+    border-radius: 50%;
+    border: 2px solid blue;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.dashboard_sidebar_user span { 
+    top: 20%;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: white;
+    display: inline-block;
+}
+
+.dashboard_menu_lists {
+    margin-top: 20px;
+    padding-left: 0px;
+}
+
+.dashboard_menu_lists li {
+    padding: 15px 15px;
+    list-style: none;
+}
+
+.dashboard_menu_lists li a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    font-size: 20px;
+}
+
+.dashboard_menu_lists li a i {
+    font-size: 25px;
+}
+
+.dashboard_menu_lists .menuActive {
+    background: blue;
+    color: white;
+}
+
+.dashboard_menu_lists li:hover {
+    background: blue;
+    color: white;
+    transition: 0.3s all;
+}
+
+.dashboard_topNav {
+    background: white;
+    padding: 20px;
+}
+
+.dashboard_topNav a {
+    color: grey;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+#logoutBtn {
+    float: right;
+}
+
+.dashboard_content {
+    padding: 50px 10px 10px 10px;
+}
+
+.dashboard_content_main {
+    background: white;
+    min-height: 800px;
+    height: 100%;
+}
+
+/* users-add */
+.appFormInput {
+    width: 100%;
+    height: 33px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+form::after {
+    content: '';
+    clear: both;
+    display: block;
+}
+
+label {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.appFormInputContainer {
+    margin-bottom: 15px;
+}
+
+.userAddFormContainer {
+    padding-top: 100px;
+}
+
+.appBtn {
+    background: blue;
+    border: 2px solid blue;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+    float: right;
+    cursor: pointer;
+}
+
+/* users_add */
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.column {
+    width: 100%;
+    padding: 0px 10px;
+}
+
+.column-5 {
+    width: 41.67%;
+}
+
+.column-7 {
+    width: 58.33%;
+}
+
+.section_header {
+    font-size: 25px;
+    color: gray;
+    border-bottom: 1px solid gray;
+    padding-bottom: 11px;
+    padding: 10px;
+    border-left: 4px solid blue;
+    margin-bottom: 20px;
+}
+
+.users table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+}
+
+table th {
+    font-size: 15px;
+    text-align: center;
+    background: lightgray;
+}
+
+table td {
+    font-size: 13px;
+    text-align: center;
+    padding: 5px;
+}
+
+.jumlah_user {
+    text-align: right;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: lightskyblue;
+}
+
+
+
+
+
+
+
+
+
 
 
 
