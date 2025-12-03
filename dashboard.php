@@ -15,7 +15,7 @@
 </head>
 <body>
     <div id="dashboard_main_container">
-        <?php include('sidebar.php') ?> 
+        <?php include('sidebar.php') ?>
         <div class="dashboard_content_container" id="dashboard_content_container">
             <?php include('topnav.php') ?>
             <div class="dashboard_content">
