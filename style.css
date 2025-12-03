@@ -64,7 +64,7 @@ body {
 .loginInput input {
     height: 30px;
     width: 100%;
-    border: 2px solid red; 
+    border: 2px solid red;
     font-size: 20px;
     padding: 5px;
     text-align: center;
@@ -273,85 +273,6 @@ body {
     transition: 0.5s all;
 }
 
-/* dashboard */
-#dashboard_main_container {
-    display: flex;
-    flex-direction: row;
-}
-
-.dashboard_sidebar {
-    width: 20%;
-    background: #323232;
-    height: 100vh;
-}
-
-.dashboard_content_container {
-    width: 80%;
-    background: #f4f6f9;
-}
-
-.dashboard_logo {
-    color: blue;
-    font-size: 50px;
-    text-align: center;
-}
-
-.dashboard_sidebar_user {
-    text-align: center;
-    position: relative;
-    padding-bottom: 20px;
-    border-bottom: 1px solid white;
-}
-
-.dashboard_sidebar_user img {
-    width: 50px;
-    display: inline-block;
-    border-radius: 50%;
-    border: 2px solid blue;
-    margin-right: 5px;
-    vertical-align: middle;
-}
-
-.dashboard_sidebar_user span { 
-    top: 20%;
-    font-size: 18px;
-    text-transform: uppercase;
-    color: white;
-    display: inline-block;
-}
-
-.dashboard_menu_lists {
-    margin-top: 20px;
-    padding-left: 0px;
-}
-
-.dashboard_menu_lists li {
-    padding: 15px 15px;
-    list-style: none;
-}
-
-.dashboard_menu_lists li a {
-    text-decoration: none;
-    color: white;
-    display: block;
-    font-size: 20px;
-}
-
-.dashboard_menu_lists li a i {
-    font-size: 25px;
-}
-
-.dashboard_menu_lists .menuActive {
-    background: blue;
-    color: white;
-}
-
-.dashboard_menu_lists li:hover {
-    background: blue;
-    color: white;
-    transition: 0.3s all;
-}
-
 .dashboard_topNav {
     background: white;
     padding: 20px;
@@ -415,66 +336,7 @@ label {
     cursor: pointer;
 }
 
-/* users_add */
 
-.row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.column {
-    width: 100%;
-    padding: 0px 10px;
-}
-
-.column-5 {
-    width: 41.67%;
-}
-
-.column-7 {
-    width: 58.33%;
-}
-
-.section_header {
-    font-size: 25px;
-    color: gray;
-    border-bottom: 1px solid gray;
-    padding-bottom: 11px;
-    padding: 10px;
-    border-left: 4px solid blue;
-    margin-bottom: 20px;
-}
-
-.users table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-table {
-    width: 100%;
-}
-
-table th {
-    font-size: 15px;
-    text-align: center;
-    background: lightgray;
-}
-
-table td {
-    font-size: 13px;
-    text-align: center;
-    padding: 5px;
-}
-
-.jumlah_user {
-    text-align: right;
-    font-size: 15px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: lightskyblue;
-}
 
 
 
