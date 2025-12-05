@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'message' => 'Semua field harus diisi!',
             'success' => false
         ];
-        header('location: users_add.php');
+        header('location: users_view.php');
         exit();
     }
 
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $conn = null;
     
-    header('location: users_add.php');
+    header('location: users_view.php');
     exit();
 }
 ?>

@@ -19,6 +19,8 @@
         if($stmt->rowCount() > 0){
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $user = $stmt->fetchAll()[0];
+
+
             $_SESSION['user'] = $user;
 
             header('Location: dashboard.php');

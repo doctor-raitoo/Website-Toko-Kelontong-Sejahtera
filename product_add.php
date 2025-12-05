@@ -2,8 +2,8 @@
 session_start();
 if (!isset($_SESSION['user'])) header('location: login.php');
 
-$_SESSION['table'] = 'pengguna';
-$_SESSION['redirect_to'] = 'users_add.php';
+$_SESSION['table'] = 'produk';
+$_SESSION['redirect_to'] = 'product_add.php';
 $user = $_SESSION['user'];
 $users = include('show_users.php');
 ?>
@@ -27,7 +27,7 @@ $users = include('show_users.php');
         }
 
         .appFormInputContainer {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .appFormInput {
@@ -219,6 +219,12 @@ $users = include('show_users.php');
             text-transform: uppercase;
             color: lightskyblue;
         }
+
+        .productTextAreaInput {
+            width: 100%;
+            height: 75px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
@@ -231,29 +237,27 @@ $users = include('show_users.php');
             <div class="dashboard_content_main">
                 <div class="row">
                     <div class="column column-12">
-                        <h1 class="section_header"><i class="fa fa-plus"></i> Tambahkan Pengguna</h1>
+                        <h1 class="section_header"><i class="fa fa-plus"></i> Tambah Data Produk</h1>
                         <div class="userAddFormContainer">
-                            <form action="add.php" method="POST" class="appForm">
+                            <form action="add.php" method="POST" class="appForm" enctype="multipart/form-data">
                                 <div class="appFormInputContainer">
-                                    <label for="nama_depan">Nama Depan</label>
-                                    <input type="text" class="appFormInput" id="nama_depan" name="nama_depan" required />
+                                    <label for="nama_produk">Nama Produk</label>
+                                    <input type="text" class="appFormInput" id="nama_produk" placeholder="Masukkan nama produk...." name="nama_produk" required />
                                 </div>
                                 <div class="appFormInputContainer">
-                                    <label for="nama_belakang">Nama Belakang</label>
-                                    <input type="text" class="appFormInput" id="nama_belakang" name="nama_belakang" required />
+                                    <label for="deskripsi">Deskripsi</label>
+                                    <textarea class="appFormInput productTextAreaInput" name="deskripsi" placeholder="Masukkan deskripsi produk...." id="deskripsi">
+                                    </textarea>
                                 </div>
                                 <div class="appFormInputContainer">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="appFormInput" id="email" name="email" required />
-                                </div>
-                                <div class="appFormInputContainer">
-                                    <label for="password">Password</label>
-                                    <input type="password" class="appFormInput" id="password" name="password" required />
+                                    <label for="nama_produk">Gambar Produk</label>
+                                    <input type="file" name="img" />
                                 </div>
                                 <button type="submit" class="appBtn">
-                                    <i class="fa fa-plus"></i> Tambah
+                                    <i class="fa fa-plus"></i> Tambah Produk
                                 </button>
                             </form>
+
                             <?php 
                             if(isset($_SESSION['response'])) {
                                 $response_message = $_SESSION['response']['message'];
@@ -282,11 +286,11 @@ $users = include('show_users.php');
         <h2>Edit Data Pengguna</h2>
         <form action="update_users.php" method="POST" class="modal-form">
             <input type="hidden" id="edit_user_id" name="user_id">
-            <label for="edit_nama_depan">Nama Depan</label>
-            <input type="text" id="edit_nama_depan" name="nama_depan" required>
+            <label for="edit_nama_produk">Nama Depan</label>
+            <input type="text" id="edit_nama_produk" name="nama_produk" required>
             
-            <label for="edit_nama_belakang">Nama Belakang</label>
-            <input type="text" id="edit_nama_belakang" name="nama_belakang" required>
+            <label for="edit_deskripsi">Nama Belakang</label>
+            <input type="text" id="edit_deskripsi" name="deskripsi" required>
             
             <label for="edit_email">Email</label>
             <input type="email" id="edit_email" name="email" required>

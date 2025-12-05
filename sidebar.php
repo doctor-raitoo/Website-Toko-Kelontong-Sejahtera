@@ -157,13 +157,13 @@
 
                 <ul class="subMenu">
                     <li>
-                        <a class="subMenuLink" href="view_users.php">
+                        <a class="subMenuLink" href="product_view.php">
                             <i class="fa fa-circle-o"></i>
                                 <span>Lihat Produk</span>
                         </a>
                     </li>
                     <li>
-                        <a class="subMenuLink" href="view_users.php">
+                        <a class="subMenuLink" href="product_add.php">
                             <i class="fa fa-circle-o"></i>
                                 <span>Tambah Produk</span>
                         </a>

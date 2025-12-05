@@ -292,49 +292,7 @@ body {
     padding: 50px 10px 10px 10px;
 }
 
-.dashboard_content_main {
-    background: white;
-    min-height: 800px;
-    height: 100%;
-}
 
-/* users-add */
-.appFormInput {
-    width: 100%;
-    height: 33px;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin-top: 20px;
-}
-
-form::after {
-    content: '';
-    clear: both;
-    display: block;
-}
-
-label {
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.appFormInputContainer {
-    margin-bottom: 15px;
-}
-
-.userAddFormContainer {
-    padding-top: 100px;
-}
-
-.appBtn {
-    background: blue;
-    border: 2px solid blue;
-    color: white;
-    padding: 10px;
-    margin-top: 20px;
-    float: right;
-    cursor: pointer;
-}
 
 
 

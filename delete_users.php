@@ -28,6 +28,6 @@ try {
     ];
 }
 
-header('Location: users_add.php');
+header('Location: users_view.php');
 exit;
 ?>
