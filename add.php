@@ -14,10 +14,23 @@ foreach($columns as $column){
     else if ($column == 'oleh') $value = $user['id'];
     else if ($column == 'password') $value = password_hash($_POST[$column], PASSWORD_DEFAULT);
     else if ($column == 'gambar'){
-        $target_dir = "image/";
-        $file_data = $_FILES[$column];
-        $check = getimagesize($file_data['tmp_name']);
+        $value = ""; 
+        if (isset($_FILES[$column]) && $_FILES[$column]['error'] === UPLOAD_ERR_OK) {
+            $file_data = $_FILES[$column];
+            $tmp = $file_data['tmp_name'];
+            $file_name = basename($file_data['name']);
+            $target_dir = "image/";
+            $target_file = $target_dir . $file_name;
+            
+            $check = @getimagesize($tmp);
+            if ($check !== false) {
+                if (move_uploaded_file($tmp, $target_file)) {
+                    $value = $file_name;
+                }
+            }
+        }
     }
+    
     else $value = isset($_POST[$column]) ? $_POST[$column] : '';
 
     $db_arr[$column] = $value;
@@ -25,12 +38,6 @@ foreach($columns as $column){
 
 $table_properties = implode(", ", array_keys($db_arr));
 $table_placeholders = ':' . implode(", :", array_keys($db_arr));
-
-//$nama_depan = $_POST['nama_depan'];
-//$nama_belakang = $_POST['nama_belakang'];
-//$email = $_POST['email'];
-//$password = $_POST['password'];
-//$encrypted = password_hash($password, PASSWORD_DEFAULT);
 
 include('koneksi.php'); 
 

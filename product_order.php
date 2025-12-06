@@ -2,9 +2,6 @@
 session_start();
 if (!isset($_SESSION['user'])) header('location: login.php');
 
-$_SESSION['table'] = 'produk';
-$_SESSION['redirect_to'] = 'product_add.php';
-$user = $_SESSION['user'];
 $users = include('show_users.php');
 ?>
 
@@ -13,7 +10,7 @@ $users = include('show_users.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Data Pengguna</title>
+    <title>Data Penjualan Barang</title>
     <?php include('app_header_script.php'); ?>
 
     <style>
@@ -239,43 +236,8 @@ $users = include('show_users.php');
                     <div class="column column-12">
                         <h1 class="section_header"><i class="fa fa-plus"></i> Tambah Data Produk</h1>
                         <div class="userAddFormContainer">
-                            <form action="add.php" method="POST" class="appForm" enctype="multipart/form-data">
-                                <div class="appFormInputContainer">
-                                    <label for="nama_produk">Nama Produk</label>
-                                    <input type="text" class="appFormInput" id="nama_produk" placeholder="Masukkan nama produk...." name="nama_produk" required />
-                                </div>
-                                <div class="appFormInputContainer">
-                                    <label for="deskripsi">Deskripsi</label>
-                                    <textarea class="appFormInput productTextAreaInput" name="deskripsi" placeholder="Masukkan deskripsi produk...." id="deskripsi">
-                                    </textarea>
-                                </div>
-                                <div class="appFormInputContainer">
-                                    <label for="harga">Harga</label>
-                                    <input type="text" class="appFormInput" id="harga" placeholder="Masukkan harga...." name="harga" required />
-                                </div>
-                                <div class="appFormInputContainer">
-                                    <label for="gambar_produk">Gambar Produk</label>
-                                    <input type="file" name="gambar" />
-                                </div>
-                                <button type="submit" class="appBtn">
-                                    <i class="fa fa-plus"></i> Tambah Produk
-                                </button>
+                            <form action="" method="POST" class="appForm">
                             </form>
-
-                            <?php 
-                            if(isset($_SESSION['response'])) {
-                                $response_message = $_SESSION['response']['message'];
-                                $is_success = $_SESSION['response']['success'];
-                            ?>
-                                <div class="responseMessage">
-                                    <p class="<?= $is_success ? 'responseMessage__success' : 'responseMessage__error' ?>">
-                                        <?= $response_message ?>
-                                    </p>
-                                </div>
-                            <?php
-                                unset($_SESSION['response']);
-                            } 
-                            ?>
                         </div>
                     </div>
                 </div> 
@@ -283,6 +245,27 @@ $users = include('show_users.php');
         </div> 
     </div> 
 </div>
+
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Edit Data Pengguna</h2>
+        <form action="update_users.php" method="POST" class="modal-form">
+            <input type="hidden" id="edit_user_id" name="user_id">
+            <label for="edit_nama_produk">Nama Depan</label>
+            <input type="text" id="edit_nama_produk" name="nama_produk" required>
+            
+            <label for="edit_deskripsi">Nama Belakang</label>
+            <input type="text" id="edit_deskripsi" name="deskripsi" required>
+            
+            <label for="edit_email">Email</label>
+            <input type="email" id="edit_email" name="email" required>
+            
+            <button type="submit">Simpan Perubahan</button>
+        </form>
+    </div>
+</div>
+
 <?php include('app_script.php'); ?>
 
 </body>

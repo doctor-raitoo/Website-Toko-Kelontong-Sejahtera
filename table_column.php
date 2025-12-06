@@ -6,6 +6,9 @@
         ], 
         'produk' => [
             'nama_produk', 'deskripsi', 'gambar', 'oleh', 'dibuat', 'diperbarui', 'harga'
+        ],
+        'transaksi' => [
+            'produk_id', 'qty', 'total_harga', 'waktu_transaksi', 'dibuat', 'diperbarui', 'oleh'
         ]
     ];
 ?>

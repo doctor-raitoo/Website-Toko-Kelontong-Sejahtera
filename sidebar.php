@@ -1,5 +1,8 @@
-<style>
-    
+<?php 
+    $user = $_SESSION['user'];
+?>
+
+<style>    
 /* dashboard */
 #dashboard_main_container {
     display: flex;
@@ -170,6 +173,27 @@
                     </li>
                 </ul>
             </li>
+            <li class="liMainMenu showHideSubmenu">
+                <a href="javascript:void(0);" class="showHideSubmenu">
+                <i class="fa fa-shopping-cart showHideSubmenu"></i>
+                <span class="menuText showHideSubmenu"> Transaksi</span>
+                <i class="fa fa-angle-down mainMenuIconArrow showHideSubmenu"></i>
+            </a>
+            <ul class="subMenu">
+                <li>
+                    <a class="subMenuLink" href="transaction_view.php">
+                        <i class="fa fa-circle-o"></i>
+                        <span>Lihat Transaksi</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="subMenuLink" href="transaction_add.php">
+                        <i class="fa fa-circle-o"></i>
+                        <span>Tambah Transaksi</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
             <li class="liMainMenu showHideSubmenu" >
                 <a href="javascript:void(0);" class="showHideSubmenu" >
                     <i class="fa fa-user-plus showHideSubmenu" ></i>

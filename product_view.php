@@ -2,9 +2,8 @@
 session_start();
 if (!isset($_SESSION['user'])) header('location: login.php');
 
-$_SESSION['table'] = 'pengguna';
-$user = $_SESSION['user'];
-$users = include('show_users.php');
+$_SESSION['table'] = 'produk';
+$products = include('show.php');
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +11,7 @@ $users = include('show_users.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produk</title>
+    <title>Data Produk</title>
     <?php include('app_header_script.php'); ?>
     <style>
         .dashboard_content_main {
@@ -192,6 +191,11 @@ $users = include('show_users.php');
             text-transform: uppercase;
             color: lightskyblue;
         }
+
+        .productImage {
+            width: 100px;
+            height: 100px;
+        }
     </style>
 </head>
 <body>
@@ -203,7 +207,7 @@ $users = include('show_users.php');
             <div class="dashboard_content_main">
                 <div class="row">
                     <div class="column column-12">
-                        <h1 class="section_header"><i class="fa fa-users"></i> Daftar Pengguna</h1>
+                        <h1 class="section_header"><i class="fa fa-list"></i> Daftar Barang/Produk</h1>
 
                         <div class="section_content">
                             <div class="users">
@@ -211,36 +215,54 @@ $users = include('show_users.php');
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Nama Depan</th>
-                                            <th>Nama Belakang</th>
-                                            <th>Email</th>
-                                            <th>Dibuat</th>
+                                            <th>Gambar</th>
+                                            <th>Nama Produk</th>
+                                            <th>Deskripsi</th>
+                                            <th>Harga</th>
+                                            <th>Ditambahkan oleh</th>
+                                            <th>Ditambahkan</th>
                                             <th>Diperbarui</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach($users as $index => $u){ ?>
+                                        <?php foreach($products as $index => $product){ ?>
                                         <tr>
                                             <td><?= $index + 1 ?></td>
-                                            <td class="namaDepan"><?= $u['nama_depan'] ?></td>
-                                            <td class="namaBelakang"><?= $u['nama_belakang'] ?></td>
-                                            <td class="email"><?= $u['email'] ?></td>
-                                            <td><?= date('d-M-Y', strtotime($u['dibuat'])) ?></td>
-                                            <td><?= date('d-M-Y', strtotime($u['diperbarui'])) ?></td>
+                                            <td class="gambar">
+                                                <img class="productImage" src="image/<?= $product['gambar']?>" alt="" />
+                                            </td>
+                                            <td class="namaProduk"><?= $product['nama_produk'] ?></td>
+                                            <td class="deskripsiProduk"><?= $product['deskripsi'] ?></td>
+                                            <td class="harga"><?= $product['harga'] ?></td>
                                             <td>
-                                                <a href="#" class="updateUser" data-id="<?= $u['id'] ?>"><i class="fa fa-pencil"></i> Edit</a>
-                                                <form action="delete_users.php" method="POST" style="display:inline;">
-                                                    <input type="hidden" name="user_id" value="<?= $u['id'] ?>">
-                                                    <input type="hidden" name="nama_depan" value="<?= $u['nama_depan'] ?>">
-                                                    <input type="hidden" name="nama_belakang" value="<?= $u['nama_belakang'] ?>">
-                                                    <button type="submit" class="deleteUser"
-                                                        onclick="return confirm('Apakah anda yakin ingin menghapus <?= $u['nama_depan'] . ' ' . $u['nama_belakang'] ?>?')"
-                                                        style=
-                                                        "background:none;
-                                                        border:none;
-                                                        color:red;
-                                                        cursor:pointer;">
+                                                <?php
+                                                    $pid = $product['oleh'];
+                                                    $stmt = $conn->prepare("SELECT * FROM pengguna WHERE id=$pid");
+                                                    $stmt->execute();
+                                                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                                                    $created_by_name = $row['nama_depan'] . ' ' . $row['nama_belakang'];
+                                                    echo $created_by_name;
+                                                ?>
+                                            </td>
+                                            <td><?= date('d-M-Y', strtotime($product['dibuat'])) ?></td>
+                                            <td><?= date('d-M-Y', strtotime($product['diperbarui'])) ?></td>
+                                            <td>
+                                                <a href="#" class="updateProduct" data-pid="<?= $product['id'] ?>">
+                                                    <i class="fa fa-pencil"></i> Edit
+                                                </a>
+                                                <form method="POST" action="delete.php" style="display:inline;">
+                                                    <input type="hidden" name="id" value="<?= $product['id'] ?>">
+                                                    <input type="hidden" name="table" value="produk">
+
+                                                    <button type="submit"
+                                                        onclick="return confirm('Apakah anda yakin ingin menghapus?')"
+                                                        style="
+                                                            background:none;
+                                                            border:none;
+                                                            color:red;
+                                                            cursor:pointer;
+                                                        ">
                                                         <i class="fa fa-trash"></i> Hapus
                                                     </button>
                                                 </form>
@@ -249,7 +271,6 @@ $users = include('show_users.php');
                                         <?php } ?>
                                     </tbody>
                                 </table>
-                                <p class="jumlah_user"><?= count($users) ?> Pengguna</p>
                             </div>
                         </div>
                     </div>
@@ -262,18 +283,24 @@ $users = include('show_users.php');
 <div id="editModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <h2>Edit Data Pengguna</h2>
-        <form action="update_users.php" method="POST" class="modal-form">
-            <input type="hidden" id="edit_user_id" name="user_id">
-            <label for="edit_nama_depan">Nama Depan</label>
-            <input type="text" id="edit_nama_depan" name="nama_depan" required>
+        <h2>Edit Data produk</h2>
+        <form action="update.php" method="POST" class="modal-form">
+            <input type="hidden" id="edit_product_id" name="product_id">
+            <label for="edit_nama_produk">Nama Produk</label>
+            <input type="text" id="edit_nama_produk" name="nama_produk" required>
             
-            <label for="edit_nama_belakang">Nama Belakang</label>
-            <input type="text" id="edit_nama_belakang" name="nama_belakang" required>
+            <label for="edit_deskripsi">Deskripsi</label>
+            <input type="text" id="edit_deskripsi" name="deskripsi" required>
+
+            <label for="edit_harga">Harga</label>
+            <input type="text" id="edit_harga" name="harga" required>
             
-            <label for="edit_email">Email</label>
-            <input type="email" id="edit_email" name="email" required>
-            
+            <label for="edit_gambar">Gambar</label>
+            <input type="file" id="edit_gambar" name="gambar">
+
+            <label>Gambar Saat Ini:</label>
+            <img id="preview_gambar" src="" style="width:100px;height:100px;margin-bottom:10px;border:1px solid #ccc;">
+
             <button type="submit">Simpan Perubahan</button>
         </form>
     </div>
@@ -293,23 +320,27 @@ $users = include('show_users.php');
                 const targetElement = e.target;
                 const classList = targetElement.classList;
 
-                if(classList.contains('deleteUser')){
+                if(classList.contains('deleteProduct')){
                 }
-
-                if(classList.contains('updateUser')){
+                if (classList.contains('updateProduct')) {
                     e.preventDefault();
-                    
+
                     const row = targetElement.closest('tr');
-                    const namaDepan = row.querySelector('td.namaDepan').innerHTML;
-                    const namaBelakang = row.querySelector('td.namaBelakang').innerHTML;
-                    const email = row.querySelector('td.email').innerHTML;
-                    const userId = targetElement.getAttribute('data-id');
-                    
-                    document.getElementById('edit_user_id').value = userId;
-                    document.getElementById('edit_nama_depan').value = namaDepan;
-                    document.getElementById('edit_nama_belakang').value = namaBelakang;
-                    document.getElementById('edit_email').value = email;
-                    
+
+                    const namaProduk = row.querySelector('.namaProduk').textContent;
+                    const deskripsiProduk = row.querySelector('.deskripsiProduk').textContent;
+                    const harga = row.querySelector('.harga').textContent;
+                    const gambarFullPath = row.querySelector('.productImage').getAttribute('src');
+
+                    const productId = targetElement.getAttribute('data-pid');
+
+                    document.getElementById('edit_product_id').value = productId;
+                    document.getElementById('edit_nama_produk').value = namaProduk;
+                    document.getElementById('edit_deskripsi').value = deskripsiProduk;
+                    document.getElementById('edit_harga').value = harga;
+
+                    document.getElementById('preview_gambar').src = gambarFullPath;
+
                     document.getElementById('editModal').style.display = 'block';
                 }
             });
@@ -328,6 +359,8 @@ $users = include('show_users.php');
     }
     var script = new script();
     script.initialize();
+</script>
+
 </script>
 
 </html>
