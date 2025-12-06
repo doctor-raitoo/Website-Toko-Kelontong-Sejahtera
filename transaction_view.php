@@ -1,11 +1,18 @@
 <?php 
 session_start();
+date_default_timezone_set('Asia/Jakarta');
 if (!isset($_SESSION['user'])) header('location: login.php');
 
 $_SESSION['table'] = 'transaksi';
 $transaksi = include('show.php');
 
 include('koneksi.php');
+
+$grouped = [];
+foreach ($transaksi as $t) {
+    $tgl = date('d/m/Y', strtotime($t['waktu_transaksi']));
+    $grouped[$tgl][] = $t;
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,54 +27,61 @@ include('koneksi.php');
         .dashboard_content_main {
             background: white;
             min-height: 800px;
-            padding-left: 20px;
+            height: 100%;
             border: 1px solid lightgray;
+            padding: 20px;
         }
 
         .section_header {
             font-size: 25px;
             color: gray;
             border-bottom: 1px solid gray;
-            padding: 10px 0;
-            padding-left: 10px;
+            padding-bottom: 11px;
+            padding: 10px;
             border-left: 4px solid blue;
             margin-bottom: 20px;
         }
 
-        .users table, th, td {
-            border: 1px solid black;
-            padding: 10px 8px;
-            text-align: center;
-            font-size: 14px;
+        .tanggal_title {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 5px;
+            color: #333;
+            border-left: 4px solid #007bff;
+            margin-top: 35px;
+            margin-bottom: 10px;
+            background: #eef6ff;
         }
 
         .users table {
-            width: 100%;
+            width: 98%;
             border-collapse: collapse;
+            margin-bottom: 25px;
             background: white;
-            overflow: hidden;
             box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .users table th {
-            background: lightgray;
-            font-weight: bold;
+            background: #f1f1f1;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+        }
+
+        .users table td {
+            padding: 10px;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            text-align: center;
         }
 
         .users table tr:nth-child(even) {
             background: #fafafa;
         }
-
-        .users table tr:hover {
-            background: #eef3ff;
-            transition: 0.2s;
-        }
-
-        .deleteUser i {
-            color: red;
-        }
-
     </style>
+
 </head>
 
 <body>
@@ -82,70 +96,72 @@ include('koneksi.php');
             <div class="dashboard_content_main">
 
                 <h1 class="section_header">
-                    <i class="fa fa-shopping-cart"></i> Data Transaksi Pembelian
+                    <i class="fa fa-shopping-cart"></i> Data Transaksi Penjualan
                 </h1>
 
                 <div class="users">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nama Produk</th>
-                                <th>Qty</th>
-                                <th>Harga Satuan</th>
-                                <th>Total Harga</th>
-                                <th>Waktu Transaksi</th>
-                                <th>Kasir / Admin</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
 
-                        <tbody>
-                            <?php foreach($transaksi as $index => $t): ?>
+                    <?php foreach ($grouped as $tanggal => $items): ?>
 
-                            <?php
-                                // ambil data produk
-                                $stmt = $conn->prepare("SELECT * FROM produk WHERE id = ?");
-                                $stmt->execute([$t['produk_id']]);
-                                $produk = $stmt->fetch(PDO::FETCH_ASSOC);
+                        <div class="tanggal_title">Transaksi Tanggal: <?= $tanggal ?></div>
 
-                                // ambil data user
-                                $stmt2 = $conn->prepare("SELECT * FROM pengguna WHERE id = ?");
-                                $stmt2->execute([$t['oleh']]);
-                                $user = $stmt2->fetch(PDO::FETCH_ASSOC);
-                                $kasir = $user ? $user['nama_depan'] . ' ' . $user['nama_belakang'] : '-';
-                            ?>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama Produk</th>
+                                    <th>Jumlah</th>
+                                    <th>Harga Satuan</th>
+                                    <th>Total Harga</th>
+                                    <th>Waktu Transaksi</th>
+                                    <th>Kasir/Admin</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
 
-                            <tr>
-                                <td><?= $index + 1 ?></td>
-                                <td><?= $produk['nama_produk'] ?></td>
-                                <td><?= $t['qty'] ?></td>
-                                <td>Rp <?= number_format($produk['harga']) ?></td>
-                                <td><b>Rp <?= number_format($t['total_harga']) ?></b></td>
-                                <td><?= date('d-m-Y H:i:s', strtotime($t['waktu_transaksi'])) ?></td>
-                                <td><?= $kasir ?></td>
+                            <tbody>
 
-                                <td>
-                                    <form action="delete.php" method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus transaksi ini?')">
+                            <?php foreach ($items as $index => $t): ?>
 
-                                        <input type="hidden" name="id" value="<?= $t['id'] ?>">
-                                        <input type="hidden" name="table" value="transaksi">
+                                <?php  
+                                    $stmt = $conn->prepare("SELECT * FROM produk WHERE id = ?");
+                                    $stmt->execute([$t['produk_id']]);
+                                    $produk = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                                        <button type="submit" 
-                                            style="background:none; border:none; cursor:pointer; color:red;">
-                                            <i class="fa fa-trash"></i> Hapus
-                                        </button>
-                                    </form>
-                                </td>
+                                    $stmt2 = $conn->prepare("SELECT * FROM pengguna WHERE id = ?");
+                                    $stmt2->execute([$t['oleh']]);
+                                    $user = $stmt2->fetch(PDO::FETCH_ASSOC);
+                                    $kasir = $user ? $user['nama_depan'].' '.$user['nama_belakang'] : '-';
+                                ?>
 
-                            </tr>
+                                <tr>
+                                    <td><?= $index + 1 ?></td>
+                                    <td><?= $produk['nama_produk'] ?></td>
+                                    <td><?= $t['qty'] ?></td>
+                                    <td>Rp <?= number_format($produk['harga']) ?></td>
+                                    <td><b>Rp <?= number_format($t['total_harga']) ?></b></td>
+                                    <td><?= date('H:i:s', strtotime($t['waktu_transaksi'])) ?></td>
+                                    <td><?= $kasir ?></td>
+
+                                    <td>
+                                        <form action="delete.php" method="POST"
+                                            onsubmit="return confirm('Yakin ingin menghapus transaksi ini?')">
+
+                                            <input type="hidden" name="id" value="<?= $t['id'] ?>">
+                                            <input type="hidden" name="table" value="transaksi">
+
+                                            <button type="submit" 
+                                                style="background:none; border:none; cursor:pointer; color:red;">
+                                                <i class="fa fa-trash"></i> Hapus
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
-                        </tbody>
-
-                    </table>
+                            </tbody>
+                        </table>
+                    <?php endforeach; ?>
                 </div>
-
             </div>
         </div>
     </div>

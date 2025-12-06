@@ -57,7 +57,7 @@ $products = include('show.php');
         }
         .modal-content {
             background-color: #fefefe;
-            margin: 15% auto;
+            margin: 5% auto;
             padding: 20px;
             border: 2px solid #888;
             width: 80%;

@@ -25,5 +25,16 @@ try {
     ];
 }
 
-header('Location: product_view.php');
+$redirect = 'dashboard.php'; 
+
+if ($table === 'produk') {
+    $redirect = 'product_view.php';
+} elseif ($table === 'pengguna') {
+    $redirect = 'users_view.php';
+} elseif ($table === 'transaksi') {
+    $redirect = 'transaction_view.php';
+}
+
+header("Location: $redirect");
 exit;
+

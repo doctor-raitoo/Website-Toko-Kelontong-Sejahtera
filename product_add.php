@@ -13,135 +13,118 @@ $users = include('show_users.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Data Pengguna</title>
+    <title>Tambah Data Produk</title>
     <?php include('app_header_script.php'); ?>
 
     <style>
         .appForm {
-            width: 80%;
+            width: 70%;
             margin: 0 auto;
-            padding: 20px;
-            border: 1px solid lightblue;
-            border-radius: 10px;
-            background: whitesmoke;
+            padding: 30px 35px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #d5e0ff;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
         }
 
         .appFormInputContainer {
-            margin-bottom: 15px;
+            margin-bottom: 22px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 13px;
+            color: #333;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 6px;
         }
 
         .appFormInput {
             width: 100%;
-            height: 33px;
-            border: 1px solid black;
-            border-radius: 5px;
-            margin-top: 5px;
+            height: 40px;
+            border: 1px solid #bfc7d1;
+            border-radius: 7px;
+            padding: 0 10px;
+            font-size: 14px;
+            transition: 0.2s;
         }
 
-        form::after {
-            content: '';
-            clear: both;
-            display: block;
+        .appFormInput:focus,
+        .productTextAreaInput:focus {
+            border-color: #4a7dff;
+            box-shadow: 0 0 4px rgba(74,125,255,0.4);
+            outline: none;
         }
 
-        label {
-            font-weight: bold;
-            text-transform: uppercase;
+        .productTextAreaInput {
+            width: 100%;
+            height: 90px;
+            border: 1px solid #bfc7d1;
+            border-radius: 7px;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        input[type="file"] {
+            margin-top: 6px;
+        }
+
+        .buttonContainer {
+            text-align: center;
+            margin-top: 25px;
         }
 
         .appBtn {
-            background: blue;
-            border: 2px solid blue;
-            border-radius: 5px;
+            width: 60%;
+            padding: 12px 0;
+            background: #006eff;
             color: white;
-            padding: 10px;
-            margin-top: 10px;
-            float: right;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            font-size: 15px;
             cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .appBtn:hover {
+            background: #0057d4;
+            transform: translateY(-2px);
+        }
+
+        .appBtn:active {
+            transform: scale(0.97);
         }
 
         .responseMessage {
-            font-size: 20px;
+            margin-top: 28px;
             text-align: center;
-            margin-top: 30px;
-            padding: 25px;
         }
 
         .responseMessage__success {
-            background: lightgreen;
+            background: #d6ffd9;
+            color: #0a7613;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            border-left: 5px solid #28c22f;
         }
 
         .responseMessage__error {
-            background: red;
-        }
-
-        .userAddFormContainer {
-            padding-top: 30px;
-        }
-
-        /* form edit */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 2px solid #888;
-            width: 80%;
-            max-width: 500px;
-            border-radius: 10px;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
+            background: #ffd6d6;
+            color: #900000;
+            padding: 15px;
+            border-radius: 8px;
             font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .modal-form label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .modal-form input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .modal-form button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .modal-form button:hover {
-            background-color: #45a049;
+            border-left: 5px solid red;
         }
 
-        /* table */
         .row {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
             width: 100%;
         }
+
         .column {
             width: 100%;
             padding: 0px 10px;
@@ -156,75 +139,6 @@ $users = include('show_users.php');
             border-left: 4px solid blue;
             margin-bottom: 20px;
         }
-
-        .users table, th, td {
-            border: 1px solid black;
-            padding: 10px 8px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .users table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: "Roboto" sans-serif;
-            background: white;
-            border-radius: 0px;
-            overflow: hidden;
-            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .users table th {
-            background: lightgray;
-            font-weight: 600;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-            color: #333;
-            text-align: center;
-        }
-
-        .users table tbody tr:nth-child(even){
-            background: #fafafa;
-        }
-
-        .users table tbody tr:hover {
-            background: #eef3ff;
-            transition: 0.2s;
-        }
-
-        .users a.updateUser,
-        .users .deleteUser {
-            font-size: 13px;
-        }
-
-        .users .deleteUser i {
-            color: red;
-        }
-
-        .users .updateUser i {
-            color: #007bff;
-        }
-
-        .users table td {
-            font-size: 13px;
-            text-align: center;
-            padding: 5px;
-        }
-
-        .jumlah_user {
-            margin-top: 20px;
-            text-align: right;
-            font-size: 15px;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: lightskyblue;
-        }
-
-        .productTextAreaInput {
-            width: 100%;
-            height: 75px;
-            border-radius: 5px;
-        }
     </style>
 </head>
 
@@ -238,28 +152,37 @@ $users = include('show_users.php');
                 <div class="row">
                     <div class="column column-12">
                         <h1 class="section_header"><i class="fa fa-plus"></i> Tambah Data Produk</h1>
+
                         <div class="userAddFormContainer">
+                            
                             <form action="add.php" method="POST" class="appForm" enctype="multipart/form-data">
+
                                 <div class="appFormInputContainer">
                                     <label for="nama_produk">Nama Produk</label>
                                     <input type="text" class="appFormInput" id="nama_produk" placeholder="Masukkan nama produk...." name="nama_produk" required />
                                 </div>
+
                                 <div class="appFormInputContainer">
                                     <label for="deskripsi">Deskripsi</label>
-                                    <textarea class="appFormInput productTextAreaInput" name="deskripsi" placeholder="Masukkan deskripsi produk...." id="deskripsi">
-                                    </textarea>
+                                    <textarea class="appFormInput productTextAreaInput" name="deskripsi" placeholder="Masukkan deskripsi produk...." id="deskripsi"></textarea>
                                 </div>
+
                                 <div class="appFormInputContainer">
                                     <label for="harga">Harga</label>
                                     <input type="text" class="appFormInput" id="harga" placeholder="Masukkan harga...." name="harga" required />
                                 </div>
+
                                 <div class="appFormInputContainer">
                                     <label for="gambar_produk">Gambar Produk</label>
                                     <input type="file" name="gambar" />
                                 </div>
-                                <button type="submit" class="appBtn">
-                                    <i class="fa fa-plus"></i> Tambah Produk
-                                </button>
+
+                                <div class="buttonContainer">
+                                    <button type="submit" class="appBtn">
+                                        <i class="fa fa-plus"></i> Tambah Produk
+                                    </button>
+                                </div>
+
                             </form>
 
                             <?php 
@@ -272,10 +195,8 @@ $users = include('show_users.php');
                                         <?= $response_message ?>
                                     </p>
                                 </div>
-                            <?php
-                                unset($_SESSION['response']);
-                            } 
-                            ?>
+                            <?php unset($_SESSION['response']); } ?>
+
                         </div>
                     </div>
                 </div> 
@@ -283,7 +204,7 @@ $users = include('show_users.php');
         </div> 
     </div> 
 </div>
-<?php include('app_script.php'); ?>
 
+<?php include('app_script.php'); ?>
 </body>
 </html>
