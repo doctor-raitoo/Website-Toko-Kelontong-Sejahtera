@@ -2,7 +2,7 @@
 $server = "localhost";
 $user = "root";
 $pass = "";
-$db = "stoks"; // ganti sesuai nama database kamu
+$db = "stoks"; 
 
 try {
     $conn = new PDO("mysql:host=$server;dbname=$db", $user, $pass);

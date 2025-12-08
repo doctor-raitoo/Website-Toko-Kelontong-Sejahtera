@@ -43,14 +43,17 @@ foreach ($transaksi as $t) {
         }
 
         .tanggal_title {
-            font-size: 18px;
+            font-size: 15px;
             font-weight: bold;
-            padding: 10px 5px;
+            padding: 12px 10px;
             color: #333;
-            border-left: 4px solid #007bff;
+            border-left: 5px solid #007bff;
             margin-top: 35px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             background: #eef6ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .users table {
@@ -68,6 +71,7 @@ foreach ($transaksi as $t) {
             padding: 10px;
             font-size: 14px;
             border: 1px solid #ccc;
+            text-align: center;
         }
 
         .users table td {
@@ -103,8 +107,14 @@ foreach ($transaksi as $t) {
 
                     <?php foreach ($grouped as $tanggal => $items): ?>
 
-                        <div class="tanggal_title">Transaksi Tanggal: <?= $tanggal ?></div>
-
+                        <div class="tanggal_title">
+                            Transaksi Tanggal: <?= $tanggal ?>
+                            <a href="print_report.php?tanggal=<?= $tanggal ?>" 
+                            style="font-size:14px; padding:6px 10px; background:#007bff; 
+                            color:white; border-radius:4px; text-decoration:none; display:inline-block;">
+                            Cetak Laporan
+                            </a>
+                        </div>
                         <table>
                             <thead>
                                 <tr>
@@ -137,7 +147,7 @@ foreach ($transaksi as $t) {
                                 <tr>
                                     <td><?= $index + 1 ?></td>
                                     <td><?= $produk['nama_produk'] ?></td>
-                                    <td><?= $t['qty'] ?></td>
+                                    <td><?= $t['qty'] ?></td>   
                                     <td>Rp <?= number_format($produk['harga']) ?></td>
                                     <td><b>Rp <?= number_format($t['total_harga']) ?></b></td>
                                     <td><?= date('H:i:s', strtotime($t['waktu_transaksi'])) ?></td>
@@ -159,6 +169,17 @@ foreach ($transaksi as $t) {
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
+
+                            <?php  
+                                $total_qty = array_sum(array_column($items, 'qty'));
+                                $total_pendapatan = array_sum(array_column($items, 'total_harga'));
+                            ?>
+                            <tr style="background:#e8f3ff; font-weight:bold;">
+                                <td colspan="2">Total Barang Terjual</td>
+                                <td><?= $total_qty ?></td>
+                                <td colspan="2">Total Pendapatan</td>
+                                <td colspan="3">Rp <?= number_format($total_pendapatan) ?></td>
+                            </tr>
                         </table>
                     <?php endforeach; ?>
                 </div>

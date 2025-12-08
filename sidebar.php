@@ -2,138 +2,148 @@
     $user = $_SESSION['user'];
 ?>
 
-<style>    
-/* dashboard */
-#dashboard_main_container {
-    display: flex;
-    flex-direction: row;
-}
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
 
-.dashboard_sidebar {
-    width: 20%;
-    background: #323232;
-    height: 100vh;
-}
+    #dashboard_main_container {
+        display: flex;
+        flex-direction: row;
+        height: 100vh;
+    }
 
-.dashboard_content_container {
-    width: 80%;
-    background: #f4f6f9;
-}
+    .dashboard_sidebar {
+        width: 20%;
+        background: #323232;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+    }
 
-.dashboard_logo {
-    color: blue;
-    font-size: 50px;
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
+    .dashboard_content_container {
+        width: 80%;
+        background: #f4f6f9;
+        margin-left: 20%;
+        width: 80%;
+    }
 
-.dashboard_sidebar_user {
-    text-align: center;
-    position: relative;
-    padding-bottom: 20px;
-    border-bottom: 1px solid white;
-}
+    .dashboard_logo {
+        color: blue;
+        font-size: 50px;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
 
-.dashboard_sidebar_user img {
-    width: 50px;
-    display: inline-block;
-    border-radius: 50%;
-    border: 2px solid lightgray;
-    margin-right: 5px;
-    vertical-align: middle;
-}
+    .dashboard_sidebar_user {
+        text-align: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-.dashboard_sidebar_user span { 
-    top: 20%;
-    font-size: 15px;
-    text-transform: uppercase;
-    color: white;
-    display: inline-block;
-}
+    .dashboard_sidebar_user img {
+        width: 60px;
+        border-radius: 50%;
+        border: 2px solid lightgray;
+        margin-bottom: 10px;   /* Jarak foto ke nama */
+    }
 
-.dashboard_menu_lists {
-    margin-top: 20px;
-    padding-left: 0px;
-}
+    .dashboard_sidebar_user span { 
+        font-size: 16px;
+        text-transform: uppercase;
+        color: white;
+        margin-top: 5px;        /* Opsional */
+    }
 
-
-.dashboard_menu_lists li.liMainMenu {
-    padding-top: 20px;
-    list-style: none;
-}
-
-.dashboard_menu_lists li.liMainMenu a {
-    text-decoration: none;
-    color: white;
-    display: block;
-    font-size: 14px;
-    padding: 0px 15px;
-    padding-bottom: 15px;
-    padding-right: 0px;
-}
-
-.dashboard_menu_lists li.liMainMenu a i {
-    font-size: 23px;
-    width: 30px;
-}
-
-.dashboard_menu_lists .menuActive {
-    background: blue;
-    color: white;
-}
-
-.dashboard_menu_lists li:hover {
-    background: blue;
-    color: white;
-    transition: 0.3s all;
-}
-
-.subMenu {
-    background: #0f46e0ff;
-    display: none;
-    padding: 0;
-    margin: 0;
-}
-
-.subMenu li {
-    list-style: none;
-}
+    .dashboard_menu_lists {
+        margin-top: 20px;
+        padding-left: 0px;
+    }
 
 
-.dashboard_menu_lists li.liMainMenu ul.subMenu a.subMenuLink {
-    display: flex;
-    align-items: center;
-    padding: 10px 25px;
-    font-size: 15px;
-    color: white !important;
-    text-decoration: none;
-    width: 100%;
-}
+    .dashboard_menu_lists li.liMainMenu {
+        padding-top: 20px;
+        list-style: none;
+    }
 
-.dashboard_menu_lists li.liMainMenu ul.subMenu a.subMenuLink:hover {
-    background: #154ff0;
-    transition: 0.2s;
-}
+    .dashboard_menu_lists li.liMainMenu a {
+        text-decoration: none;
+        color: white;
+        display: block;
+        font-size: 14px;
+        padding: 0px 15px;
+        padding-bottom: 15px;
+        padding-right: 0px;
+    }
 
-.dashboard_menu_lists li.liMainMenu ul.subMenu a.subMenuLink i {
-    width: 20px;
-    text-align: center;
-    margin-right: 12px;
-    font-size: 17px !important;
-}
+    .dashboard_menu_lists li.liMainMenu a i {
+        font-size: 23px;
+        width: 30px;
+    }
+
+    .dashboard_menu_lists .menuActive {
+        background: blue;
+        color: white;
+    }
+
+    .dashboard_menu_lists li:hover {
+        background: blue;
+        color: white;
+        transition: 0.3s all;
+    }
+
+    .subMenu {
+        background: #0f46e0ff;
+        display: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .subMenu li {
+        list-style: none;
+    }
 
 
-.mainMenuIconArrow {
-    float: right;
-    font-size: 19px !important;
-    margin-top: 7px;
-}
+    .dashboard_menu_lists li.liMainMenu ul.subMenu a.subMenuLink {
+        display: flex;
+        align-items: center;
+        padding: 10px 25px;
+        font-size: 15px;
+        color: white !important;
+        text-decoration: none;
+        width: 100%;
+    }
 
-.subMenuActive {
-    background: #002c8c;
-    border-left: 4px solid white;
-}
+    .dashboard_menu_lists li.liMainMenu ul.subMenu a.subMenuLink:hover {
+        background: #154ff0;
+        transition: 0.2s;
+    }
+
+    .dashboard_menu_lists li.liMainMenu ul.subMenu a.subMenuLink i {
+        width: 20px;
+        text-align: center;
+        margin-right: 12px;
+        font-size: 17px !important;
+    }
+
+
+    .mainMenuIconArrow {
+        float: right;
+        font-size: 19px !important;
+        margin-top: 7px;
+    }
+
+    .subMenuActive {
+        background: #002c8c;
+        border-left: 4px solid white;
+    }
 
 </style>
 <div class="dashboard_sidebar" id="dashboard_sidebar">
@@ -218,8 +228,6 @@ document.addEventListener('click', function(e){
     if (clickedEl.classList.contains('showHideSubmenu')) {
         let subMenu = clickedEl.closest('li').querySelector('.subMenu');
         let mainMenuIcon = clickedEl.closest('li').querySelector('.mainMenuIconArrow');
-
-
 
         let subMenus = document.querySelectorAll('.subMenu');
         subMenus.forEach((sub) => {
