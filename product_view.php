@@ -129,29 +129,29 @@ $products = include('show.php');
             margin-bottom: 20px;
         }
 
-        .users table, th, td {
-            border: 1px solid black;
-            padding: 10px 8px;
-            text-align: center;
-            font-size: 14px;
-        }
-
         .users table {
             width: 100%;
             border-collapse: collapse;
-            font-family: "Roboto" sans-serif;
+            margin-bottom: 25px;
+            margin-top: 35px;
             background: white;
-            border-radius: 0px;
-            overflow: hidden;
             box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .users table th {
-            background: lightgray;
-            font-weight: 600;
+            background: #f1f1f1;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .users table td {
+            padding: 10px;
             font-size: 13px;
-            letter-spacing: 0.5px;
-            color: #333;
+            border: 1px solid #ccc;
             text-align: center;
         }
 
@@ -219,6 +219,7 @@ $products = include('show.php');
                                             <th>Nama Produk</th>
                                             <th>Deskripsi</th>
                                             <th>Harga</th>
+                                            <th>Stok</th> <!-- KOLUM BARU -->
                                             <th>Ditambahkan oleh</th>
                                             <th>Ditambahkan</th>
                                             <th>Diperbarui</th>
@@ -235,16 +236,20 @@ $products = include('show.php');
                                             <td class="namaProduk"><?= $product['nama_produk'] ?></td>
                                             <td class="deskripsiProduk"><?= $product['deskripsi'] ?></td>
                                             <td class="harga"><?= $product['harga'] ?></td>
+
+                                            <td class="stok"><?= $product['stok'] ?></td>
+
                                             <td>
                                                 <?php
                                                     $pid = $product['oleh'];
+                                                    include('koneksi.php');
                                                     $stmt = $conn->prepare("SELECT * FROM pengguna WHERE id=$pid");
                                                     $stmt->execute();
                                                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                                                    $created_by_name = $row['nama_depan'] . ' ' . $row['nama_belakang'];
-                                                    echo $created_by_name;
+                                                    echo $row['nama_depan'] . ' ' . $row['nama_belakang'];
                                                 ?>
                                             </td>
+
                                             <td><?= date('d-M-Y', strtotime($product['dibuat'])) ?></td>
                                             <td><?= date('d-M-Y', strtotime($product['diperbarui'])) ?></td>
                                             <td>
@@ -257,12 +262,7 @@ $products = include('show.php');
 
                                                     <button type="submit"
                                                         onclick="return confirm('Apakah anda yakin ingin menghapus?')"
-                                                        style="
-                                                            background:none;
-                                                            border:none;
-                                                            color:red;
-                                                            cursor:pointer;
-                                                        ">
+                                                        style="background:none;border:none;color:red;cursor:pointer;">
                                                         <i class="fa fa-trash"></i> Hapus
                                                     </button>
                                                 </form>
@@ -284,8 +284,9 @@ $products = include('show.php');
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Edit Data produk</h2>
-        <form action="update.php" method="POST" class="modal-form">
+        <form action="update.php" method="POST" class="modal-form" enctype="multipart/form-data">
             <input type="hidden" id="edit_product_id" name="product_id">
+
             <label for="edit_nama_produk">Nama Produk</label>
             <input type="text" id="edit_nama_produk" name="nama_produk" required>
             
@@ -294,7 +295,10 @@ $products = include('show.php');
 
             <label for="edit_harga">Harga</label>
             <input type="text" id="edit_harga" name="harga" required>
-            
+
+            <label for="edit_stok">Stok</label>
+            <input type="number" id="edit_stok" name="stok" required>
+
             <label for="edit_gambar">Gambar</label>
             <input type="file" id="edit_gambar" name="gambar">
 
@@ -320,26 +324,19 @@ $products = include('show.php');
                 const targetElement = e.target;
                 const classList = targetElement.classList;
 
-                if(classList.contains('deleteProduct')){
-                }
                 if (classList.contains('updateProduct')) {
                     e.preventDefault();
-
                     const row = targetElement.closest('tr');
 
-                    const namaProduk = row.querySelector('.namaProduk').textContent;
-                    const deskripsiProduk = row.querySelector('.deskripsiProduk').textContent;
-                    const harga = row.querySelector('.harga').textContent;
-                    const gambarFullPath = row.querySelector('.productImage').getAttribute('src');
+                    document.getElementById('edit_product_id').value = targetElement.getAttribute('data-pid');
+                    document.getElementById('edit_nama_produk').value = row.querySelector('.namaProduk').textContent;
+                    document.getElementById('edit_deskripsi').value = row.querySelector('.deskripsiProduk').textContent;
+                    document.getElementById('edit_harga').value = row.querySelector('.harga').textContent;
 
-                    const productId = targetElement.getAttribute('data-pid');
+                    // isi stok
+                    document.getElementById('edit_stok').value = row.querySelector('.stok').textContent;
 
-                    document.getElementById('edit_product_id').value = productId;
-                    document.getElementById('edit_nama_produk').value = namaProduk;
-                    document.getElementById('edit_deskripsi').value = deskripsiProduk;
-                    document.getElementById('edit_harga').value = harga;
-
-                    document.getElementById('preview_gambar').src = gambarFullPath;
+                    document.getElementById('preview_gambar').src = row.querySelector('.productImage').getAttribute('src');
 
                     document.getElementById('editModal').style.display = 'block';
                 }
@@ -350,17 +347,14 @@ $products = include('show.php');
             });
 
             window.addEventListener('click', function(e){
-                const modal = document.getElementById('editModal');
-                if (e.target === modal) {
-                    modal.style.display = 'none';
+                if (e.target === document.getElementById('editModal')) {
+                    document.getElementById('editModal').style.display = 'none';
                 }
             });
         }
     }
     var script = new script();
     script.initialize();
-</script>
-
 </script>
 
 </html>

@@ -169,7 +169,13 @@ $users = include('show_users.php');
 
                                 <div class="appFormInputContainer">
                                     <label for="harga">Harga</label>
-                                    <input type="text" class="appFormInput" id="harga" placeholder="Masukkan harga...." name="harga" required />
+                                    <input type="text" class="appFormInput" id="harga" placeholder="Masukkan harga...." name="harga" />
+                                </div>
+
+                                <div class="appFormInputContainer">
+                                    <label for="stok">Stok Barang</label>
+                                    <input type="number" class="appFormInput" id="stok" 
+                                        placeholder="Masukkan stok" name="stok" required />
                                 </div>
 
                                 <div class="appFormInputContainer">

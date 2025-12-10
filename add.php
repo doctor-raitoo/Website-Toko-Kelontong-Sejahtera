@@ -1,8 +1,5 @@
 <?php
-
 session_start();
-
-// SET TIMEZONE PHP
 date_default_timezone_set('Asia/Jakarta');
 
 include('table_column.php');
@@ -43,23 +40,52 @@ foreach($columns as $column){
     }
     else if ($column == 'waktu_transaksi') {
         $value = date('Y-m-d H:i:s'); 
-        }
-        else {
-            $value = isset($_POST[$column]) ? $_POST[$column] : '';
-        }
-
-        $db_arr[$column] = $value;
     }
+    else {
+        $value = isset($_POST[$column]) ? $_POST[$column] : '';
+    }
+
+    $db_arr[$column] = $value;
+}
 
 $table_properties = implode(", ", array_keys($db_arr));
 $table_placeholders = ':' . implode(", :", array_keys($db_arr));
 
 include('koneksi.php');
-
-// Set MySQL timezone WIB
 $conn->exec("SET time_zone = '+07:00'");
 
 try {
+
+    if ($table_name == 'transaksi') {
+
+        $produk_id = $_POST['produk_id'];
+        $qty = $_POST['qty'];
+
+        $stmt = $conn->prepare("SELECT stok FROM produk WHERE id = ?");
+        $stmt->execute([$produk_id]);
+        $produk = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$produk) {
+            throw new PDOException("Produk tidak ditemukan.");
+        }
+
+        $stok_sekarang = $produk['stok'];
+
+        if ($stok_sekarang < $qty) {
+            $_SESSION['response'] = [
+                'success' => false,
+                'message' => "Stok tidak cukup! Sisa stok: $stok_sekarang"
+            ];
+            header('location: ' . $_SESSION['redirect_to']);
+            exit;
+        }
+
+        $stok_baru = $stok_sekarang - $qty;
+
+        $stmtUpdate = $conn->prepare("UPDATE produk SET stok = ?, diperbarui = NOW() WHERE id = ?");
+        $stmtUpdate->execute([$stok_baru, $produk_id]);
+    }
+
     $sql = "INSERT INTO $table_name ($table_properties) VALUES ($table_placeholders)";
     $stmt = $conn->prepare($sql);
     $stmt->execute($db_arr);
@@ -70,10 +96,12 @@ try {
     ];
 
 } catch (PDOException $e) {
+
     $response = [
         'success' => false,
-        'message' => "Gagal menambahkan pengguna: " . $e->getMessage()
+        'message' => "Gagal menambahkan data: " . $e->getMessage()
     ];
+
 }
 
 $_SESSION['response'] = $response;

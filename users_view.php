@@ -44,7 +44,6 @@ $users = include('show_users.php');
             background: red;
         }
 
-        /* form edit */
         .modal {
             display: none;
             position: fixed;
@@ -100,7 +99,6 @@ $users = include('show_users.php');
             background-color: #45a049;
         }
 
-        /* table */
         .row {
             display: flex;
             flex-direction: row;
@@ -130,29 +128,29 @@ $users = include('show_users.php');
             margin-bottom: 20px;
         }
 
-        .users table, th, td {
-            border: 1px solid black;
-            padding: 10px 8px;
-            text-align: center;
-            font-size: 14px;
-        }
-
         .users table {
             width: 100%;
             border-collapse: collapse;
-            font-family: "Roboto" sans-serif;
+            margin-bottom: 25px;
+            margin-top: 35px;
             background: white;
-            border-radius: 0px;
-            overflow: hidden;
             box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .users table th {
-            background: lightgray;
-            font-weight: 600;
+            background: #f1f1f1;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .users table td {
+            padding: 10px;
             font-size: 13px;
-            letter-spacing: 0.5px;
-            color: #333;
+            border: 1px solid #ccc;
             text-align: center;
         }
 
