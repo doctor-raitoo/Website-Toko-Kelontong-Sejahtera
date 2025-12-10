@@ -20,6 +20,7 @@ $users = include('show_users.php');
         .appForm {
             width: 70%;
             margin: 0 auto;
+            margin-top: 25px;
             padding: 30px 35px;
             background: #ffffff;
             border-radius: 12px;
@@ -99,7 +100,8 @@ $users = include('show_users.php');
         }
 
         .responseMessage {
-            margin-top: 28px;
+            margin-top: 15px;
+            margin-bottom: 20px;
             text-align: center;
         }
 
@@ -137,7 +139,7 @@ $users = include('show_users.php');
             padding-bottom: 11px;
             padding: 10px;
             border-left: 4px solid blue;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -151,7 +153,19 @@ $users = include('show_users.php');
             <div class="dashboard_content_main">
                 <div class="row">
                     <div class="column column-12">
+
                         <h1 class="section_header"><i class="fa fa-plus"></i> Tambah Data Produk</h1>
+                        <?php 
+                        if(isset($_SESSION['response'])) {
+                            $response_message = $_SESSION['response']['message'];
+                            $is_success = $_SESSION['response']['success'];
+                        ?>
+                            <div class="responseMessage">
+                                <p class="<?= $is_success ? 'responseMessage__success' : 'responseMessage__error' ?>">
+                                    <?= $response_message ?>
+                                </p>
+                            </div>
+                        <?php unset($_SESSION['response']); } ?>
 
                         <div class="userAddFormContainer">
                             
@@ -190,18 +204,6 @@ $users = include('show_users.php');
                                 </div>
 
                             </form>
-
-                            <?php 
-                            if(isset($_SESSION['response'])) {
-                                $response_message = $_SESSION['response']['message'];
-                                $is_success = $_SESSION['response']['success'];
-                            ?>
-                                <div class="responseMessage">
-                                    <p class="<?= $is_success ? 'responseMessage__success' : 'responseMessage__error' ?>">
-                                        <?= $response_message ?>
-                                    </p>
-                                </div>
-                            <?php unset($_SESSION['response']); } ?>
 
                         </div>
                     </div>

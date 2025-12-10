@@ -186,12 +186,12 @@ $latest = $conn->query("
                 <canvas id="chartIncome" style="width:100%; height:250px;"></canvas>
 
 
-                <h2 class="sub_header">Transaksi Terbaru</h2>
+                <h2 class="sub_header">Histori Transaksi Terbaru</h2>
                 <table class="info_table">
                     <thead>
                         <tr>
                             <th>Produk</th>
-                            <th>Qty</th>
+                            <th>Jumlah</th>
                             <th>Total Harga</th>
                             <th>Waktu</th>
                         </tr>
@@ -207,7 +207,6 @@ $latest = $conn->query("
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-
             </div>
         </div>
     </div>
@@ -243,6 +242,5 @@ $latest = $conn->query("
         }
     });
 </script>
-
 </body>
 </html>

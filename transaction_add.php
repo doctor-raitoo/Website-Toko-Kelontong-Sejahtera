@@ -18,6 +18,30 @@ $produk_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Tambah Transaksi</title>
     <?php include('app_header_script.php'); ?>
     <style>
+        .page_title_bar {
+            width: 100%;
+            background: white;
+            padding: 18px 25px;
+            margin: 25px 0 25px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .page_title_bar i {
+            font-size: 28px;
+            color: #1e40af;
+        }
+
+        .page_title_bar h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
         .transaction_form_wrapper {
             width: 55%;
             margin: 30px auto;
@@ -70,6 +94,27 @@ $produk_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
             transition: 0.2s;
         }
 
+        .responseMessage {
+            margin-bottom: 22px;
+            text-align: center;
+        }
+        .responseMessage__success {
+            background: #d6ffd9;
+            color: #0a7613;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            border-left: 5px solid #28c22f;
+        }
+        .responseMessage__error {
+            background: #ffd6d6;
+            color: #900000;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            border-left: 5px solid red;
+        }
+
         @media (max-width: 768px) {
             .transaction_form_wrapper {
                 width: 90%;
@@ -86,11 +131,29 @@ $produk_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="dashboard_content_container">
         <?php include('topnav.php') ?>
 
+        <div class="page_title_bar">
+            <i class="fa fa-pencil"></i>
+            <h1>Tambah Transaksi</h1>
+        </div>
+
         <div class="dashboard_content">
 
             <div class="transaction_form_wrapper">
 
-                <h1 class="section_header"><i class="fa fa-cash-register"></i> Tambah Data Transaksi</h1>
+                <?php 
+                if(isset($_SESSION['response'])) {
+                    echo "<div class='responseMessage'>
+                            <p class='".($_SESSION['response']['success']?'responseMessage__success':'responseMessage__error')."'>
+                                ".$_SESSION['response']['message']."
+                            </p>
+                        </div>";
+                    unset($_SESSION['response']);
+                }
+                ?>
+
+                <h1 class="section_header">
+                    <i class="fa fa-cash-register"></i> Tambah Data Transaksi
+                </h1>
 
                 <form action="add.php" method="POST" class="appForm">
 
@@ -139,20 +202,7 @@ $produk_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 selectProduk.addEventListener('change', updateTotal);
                 qtyInput.addEventListener('input', updateTotal);
                 </script>
-
-                <?php 
-                if(isset($_SESSION['response'])) {
-                    echo "<div class='responseMessage'>
-                            <p class='".($_SESSION['response']['success']?'responseMessage__success':'responseMessage__error')."'>
-                                ".$_SESSION['response']['message']."
-                            </p>
-                        </div>";
-                    unset($_SESSION['response']);
-                }
-                ?>
-
-            </div><!-- end wrapper -->
-
+            </div>
         </div>
     </div>
 </div>

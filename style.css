@@ -93,26 +93,38 @@ body {
     padding: 10px;
 }
 
-/* Homepage */
-
+/* style homepage */
 .header {
     width: 100%;
-    background: blue;
-    padding: 10px 0px;
-    text-align: right;
+    background: #1f63d1;
+    padding: 12px 0px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header .homepageContainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .header a {
-    font-size: 20px;
+    font-size: 18px;
     color: white;
-    padding: 5px 1px;
+    padding: 8px 10px;
     text-decoration: none;
-    border: 2px solid transparent;
+    border-radius: 6px;
+    transition: 0.3s ease;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(3px);
 }
 
 .header a:hover {
-    border: 2px solid white;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    transform: translateY(-2px);
 }
 
 .banner {
@@ -129,24 +141,7 @@ body {
     margin: 0 auto;
 }
 
-.bannerHeader h1 {
-    font-size: 80px;
-    color: white;
-    line-height: 100%;
-}
 
-.bannerHeader p {
-    font-size: 40px;
-    margin-top: 10px;
-    color: white;
-    line-height: 100%;
-}
-
-.bannerTagline {
-    margin-top: 20px;
-    font-size: 20px;   
-    color: white;
-}
 
 .bannerIcon {
     margin-top: 50px;

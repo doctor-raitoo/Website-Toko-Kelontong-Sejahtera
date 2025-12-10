@@ -5,12 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://use.fontawesome.com/0c7a3095b5.js"></script>
+    <style>
+        .header {
+            width: 100%;
+            background: darkblue;
+            padding: 10px 2px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            opacity: 80%;
+        }
+
+        .header .homepageContainer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .header a {
+            font-size: 18px;
+            color: white;
+            padding: 5px 15px;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: 0.3s ease;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(3px);
+        }
+
+        .header a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .bannerHeader h1 {
+            font-size: 80px;
+            color: blue;
+            line-height: 100%;
+            font-family: "Montserrat";
+            font-style: italic;
+        }
+
+        .bannerHeader p {
+            font-size: 40px;
+            margin-top: 10px;
+            color: white;
+            line-height: 100%;
+            font-family: "Montserrat";
+        }
+
+        .bannerTagline {
+            margin-top: 20px;
+            font-size: 20px;   
+            color: white;
+        }
+
+        .bannerTagline b {
+            color: blue;
+            font-style: italic;
+            font-family: "Montserrat"
+        }
+    </style>
 </head>
 <body>
     <div class="header">
         <div class="homepageContainer">
-            <a href="login.php">Login</a>
+            <a href="login.php"><i class="fa fa-user"></i> Login</a>
         </div>
     </div>
     <div class="banner">
